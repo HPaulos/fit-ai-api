@@ -46,7 +46,7 @@ func NewAIService() *AIService {
 		deepseekKey: deepseekKey,
 		selectedAI:  selectedAI,
 		client: &http.Client{
-			Timeout: 60 * time.Second, // Increased timeout for DeepSeek
+			Timeout: 120 * time.Second, // Increased timeout for complex prompts
 		},
 	}
 }
@@ -136,9 +136,6 @@ func (ai *AIService) callOpenAI(prompt string) (string, error) {
 		},
 		"temperature": 0.7,
 		"max_tokens":  2000,
-		"response_format": map[string]string{
-			"type": "json_object",
-		},
 	}
 
 	// Convert request to JSON

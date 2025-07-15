@@ -4,19 +4,29 @@
 # Make sure the server is running on localhost:8080
 # Make sure AI_API_KEY is set in your environment
 
-echo "🧪 Testing AI Workout Plan API with OpenAI"
-echo "=========================================="
+echo "🧪 Testing AI Workout Plan API with Multi-AI Support"
+echo "=================================================="
 
-# Check if AI_API_KEY is set
-if [ -z "$AI_API_KEY" ]; then
-    echo "⚠️  Warning: AI_API_KEY environment variable is not set"
-    echo "   The API will return an error if OpenAI integration is enabled"
+# Check environment variables
+echo "Current AI Configuration:"
+echo "  SELECTED_AI: ${SELECTED_AI:-OPEN_AI (default)}"
+echo "  OPEN_AI_API_KEY: ${OPEN_AI_API_KEY:+SET}"
+echo "  DEEPSEEK_AI_API_KEY: ${DEEPSEEK_AI_API_KEY:+SET}"
+echo ""
+
+# Check if required API keys are set
+if [ "$SELECTED_AI" = "OPEN_AI" ] && [ -z "$OPEN_AI_API_KEY" ]; then
+    echo "⚠️  Warning: OPEN_AI_API_KEY not set but SELECTED_AI=OPEN_AI"
+fi
+
+if [ "$SELECTED_AI" = "DEEPSEEK" ] && [ -z "$DEEPSEEK_AI_API_KEY" ]; then
+    echo "⚠️  Warning: DEEPSEEK_AI_API_KEY not set but SELECTED_AI=DEEPSEEK"
 fi
 
 # Test 1: Generate workout plan for user
 echo ""
 echo "1. Generating personalized workout plan for user i05zVUkMmkabNryrIdD4vwnBPkO2..."
-echo "   (This will call OpenAI GPT-4 to generate a real workout plan)"
+echo "   (This will call ${SELECTED_AI:-OPEN_AI} to generate a real workout plan)"
 curl -X POST http://localhost:8080/api/v1/ai/workout-plan/i05zVUkMmkabNryrIdD4vwnBPkO2 \
   -H "Content-Type: application/json" \
   -s | jq '.'
@@ -58,19 +68,22 @@ curl http://localhost:8080/health \
 echo ""
 echo "✅ AI Workout Plan API tests completed!"
 echo ""
-echo "🤖 OpenAI Integration Features:"
-echo "   • Real AI-powered workout plan generation"
+echo "🤖 Multi-AI Integration Features:"
+echo "   • Support for both OpenAI GPT-4 and DeepSeek AI"
+echo "   • Configurable AI provider via environment variable"
 echo "   • Personalized based on user profile from Firestore"
 echo "   • Considers fitness level, goals, and available equipment"
 echo "   • Generates appropriate exercises, sets, reps, and weights"
-echo "   • Uses GPT-4 for high-quality fitness recommendations"
+echo "   • High-quality fitness recommendations from advanced language models"
 echo ""
 echo "📋 Available endpoints:"
-echo "   POST   /api/v1/ai/workout-plan/:user_id     - Generate workout plan (OpenAI)"
+echo "   POST   /api/v1/ai/workout-plan/:user_id     - Generate workout plan (Configurable AI)"
 echo "   GET    /api/v1/ai/workout-plan/:plan_id     - Get specific plan"
 echo "   PUT    /api/v1/ai/workout-plan/:plan_id     - Update plan"
 echo "   DELETE /api/v1/ai/workout-plan/:plan_id     - Delete plan"
 echo "   GET    /api/v1/ai/workout-plans/:user_id    - Get all user plans"
 echo ""
 echo "🔧 Environment Setup:"
-echo "   AI_API_KEY=your-openai-api-key-here" 
+echo "   OPEN_AI_API_KEY=your-openai-api-key-here"
+echo "   DEEPSEEK_AI_API_KEY=your-deepseek-api-key-here"
+echo "   SELECTED_AI=OPEN_AI or DEEPSEEK" 

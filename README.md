@@ -231,7 +231,9 @@ GORM will automatically handle migrations when you define your models.
 | `JWT_SECRET` | JWT signing secret | - |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Firebase service account key path | `serviceAccountKey.json` |
 | `GOOGLE_CLOUD_PROJECT` | Firebase project ID | - |
-| `AI_API_KEY` | AI service API key for workout plan generation | - |
+| `OPEN_AI_API_KEY` | OpenAI API key for workout plan generation | - |
+| `DEEPSEEK_AI_API_KEY` | DeepSeek API key for workout plan generation | - |
+| `SELECTED_AI` | Selected AI provider (OPEN_AI or DEEPSEEK) | OPEN_AI |
 
 ## Troubleshooting
 
@@ -281,13 +283,14 @@ The API now includes AI-powered workout plan generation with the following featu
 - Support for both weighted and bodyweight exercises
 - Progressive overload principles
 
-### OpenAI Integration
-- **Real AI-powered workout plan generation using GPT-4**
+### Multi-AI Integration
+- **Support for both OpenAI GPT-4 and DeepSeek AI**
+- Configurable AI provider via environment variable
 - Personalized based on user profile from Firestore
 - Considers fitness level, goals, and available equipment
 - Generates appropriate exercises, sets, reps, and weights
 - Uses structured prompts for consistent workout plan generation
-- High-quality fitness recommendations from OpenAI's advanced language model
+- High-quality fitness recommendations from advanced language models
 
 ## Next Steps
 

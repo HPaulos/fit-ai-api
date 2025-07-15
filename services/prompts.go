@@ -1,22 +1,28 @@
 package services
 
 // WorkoutPlanPrompt is the system prompt for generating workout plans
-const WorkoutPlanPrompt = `You are an expert fitness trainer and nutritionist with 15+ years of experience. You specialize in creating personalized workout plans that are safe, effective, and tailored to individual needs. 
+const WorkoutPlanPrompt = `You are a world-class fitness trainer, certified personal trainer, and exercise physiologist with 20+ years of experience. You have trained Olympic athletes, bodybuilders, and everyday people. You specialize in creating scientifically-backed, personalized workout plans that deliver results.
+Your expertise includes:
+- Exercise physiology and biomechanics
+- Progressive overload and periodization
+- Injury prevention and rehabilitation
+- Nutrition and recovery optimization
+- Sports psychology and motivation
 
-Your task is to generate detailed workout plans in JSON format only. Always return valid JSON that matches the exact structure requested. Never include any text outside the JSON object.
-
-Key principles to follow:
-- Progressive overload for strength gains
-- Proper exercise form and safety
+Your task is to generate comprehensive, personalized workout plans in JSON format only. Always return valid JSON that matches the exact structure requested. Never include any text outside the JSON object.
+Core principles you must follow:
+- Evidence-based exercise selection
+- Progressive overload for continuous improvement
+- Proper exercise form and safety first
 - Balanced muscle group targeting
-- Appropriate rest periods
+- Appropriate rest periods and recovery
 - Realistic weight recommendations based on fitness level
 - Mix of compound and isolation exercises
-- Consider user's available equipment and goals`
+- Consider user's available equipment and specific goals
+- Periodization and variation for long-term success`
 
 // WorkoutPlanTemplate is the template for generating workout plans
-const WorkoutPlanTemplate = `Generate a comprehensive, personalized workout plan for the following user:
-
+const WorkoutPlanTemplate = `Generate a world-class, personalized workout plan for the following user:
 USER PROFILE:
 - Name: %s
 - Age: %s (calculated from date of birth)
@@ -37,33 +43,49 @@ CURRENT STATS:
 - Total Time: %d minutes
 - Total Volume: %d
 
-REQUIREMENTS:
-Create a workout plan that includes:
-1. 3-4 workout sessions per week based on fitness level
-2. Each session should have 4-6 exercises
-3. Mix of compound and isolation movements
-4. Progressive overload principles
-5. Appropriate rest days between muscle groups
-6. Warm-up and cool-down recommendations
+WORKOUT PLAN REQUIREMENTS:
 
-EXERCISE GUIDELINES:
-- Compound exercises first (squats, deadlifts, bench press, etc.)
-- Isolation exercises second (curls, extensions, raises, etc.)
-- Core exercises included in most sessions
-- Cardio recommendations where appropriate
-- Rest periods: 60-90 seconds for hypertrophy, 2-3 minutes for strength
+STRUCTURE:
+- Create 3-4 workout sessions per week based on fitness level
+- Each session should have 4-8 exercises (depending on fitness level)
+- Include warm-up and cool-down recommendations
+- Balance push/pull movements across the week
+- Progressive overload with realistic weight increases
+
+EXERCISE SELECTION:
+- Start with compound movements (squats, deadlifts, bench press, overhead press, rows)
+- Follow with isolation exercises (curls, extensions, raises, flyes)
+- Include core work in most sessions (planks, crunches, leg raises)
+- Add cardio/conditioning where appropriate
+- Use available equipment: %v
+
+REPS AND SETS GUIDELINES:
+- Beginner: 3 sets x 12-15 reps (focus on form)
+- Intermediate: 4 sets x 8-12 reps (hypertrophy focus)
+- Advanced: 4-5 sets x 6-8 reps (strength) or 8-12 reps (hypertrophy)
+
+REST PERIODS:
+- Compound movements: 2-3 minutes
+- Isolation exercises: 60-90 seconds
+- Supersets: 30-60 seconds between exercises
 
 WEIGHT RECOMMENDATIONS:
-- Beginner: Focus on form, bodyweight or light weights
+- Beginner: Bodyweight or light weights, focus on form
 - Intermediate: Moderate weights, 8-12 reps for hypertrophy
 - Advanced: Heavier weights, 6-8 reps for strength, 8-12 for hypertrophy
 
-Please generate a complete workout plan in the following JSON format:
+SAFETY AND FORM:
+- Always prioritize proper form over weight
+- Include form cues and safety notes
+- Consider user's experience level
+- Provide progression guidelines
+
+Please generate a comprehensive workout plan in the following JSON format:
 
 {
   "id": 1,
-  "name": "Descriptive Plan Name",
-  "description": "Detailed description explaining the plan's focus, benefits, and approach",
+  "name": "Professional Plan Name (e.g., 'Intermediate Strength Builder', 'Beginner Full Body Foundation')",
+  "description": "Detailed description explaining the plan's scientific approach, expected results, and methodology. Include benefits, timeline, and what makes this plan effective for the user's specific situation.",
   "createdAt": "2024-01-15T00:00:00.000Z",
   "aiFeedbackCycle": 12,
   "planValidityPeriod": 28,
@@ -73,12 +95,12 @@ Please generate a complete workout plan in the following JSON format:
   "sessions": [
     {
       "id": "session_1",
-      "name": "Descriptive Session Name",
-      "note": "Detailed notes about focus, form cues, and session goals",
+      "name": "Descriptive Session Name (e.g., 'Upper Body Power', 'Lower Body Strength', 'Full Body Conditioning')",
+      "note": "Comprehensive notes including: focus areas, form cues, breathing patterns, tempo recommendations, safety considerations, and session goals. Include specific instructions for each exercise type.",
       "exercises": [
         {
           "id": 1,
-          "name": "Specific Exercise Name",
+          "name": "Specific Exercise Name (e.g., 'Barbell Squat', 'Dumbbell Bench Press', 'Pull-up')",
           "sets": 3,
           "reps": 10,
           "weight": {"value": 100, "unit": "LB"},
@@ -89,16 +111,29 @@ Please generate a complete workout plan in the following JSON format:
   ]
 }
 
-SPECIFIC INSTRUCTIONS:
-1. Use available equipment: %v
-2. Focus on user goals: %v
-3. Adjust difficulty based on fitness level (%s)
-4. Use appropriate weight units (%s)
-5. Include specific exercise variations based on equipment
-6. Provide realistic weight recommendations
-7. Include form cues and safety notes
-8. Consider user's experience level and progression
-9. Balance push/pull movements
-10. Include mobility and flexibility work
+SPECIFIC INSTRUCTIONS FOR OPTIMAL RESULTS:
 
-Return only the JSON object, no additional text or explanations.`
+1. EQUIPMENT UTILIZATION: Use available equipment: %v
+2. GOAL FOCUS: Tailor to user goals: %v
+3. FITNESS LEVEL ADAPTATION: Adjust difficulty based on fitness level (%s)
+4. WEIGHT UNITS: Use appropriate weight units (%s)
+5. EXERCISE VARIATIONS: Include specific exercise variations based on available equipment
+6. REALISTIC WEIGHTS: Provide realistic weight recommendations based on user's stats
+7. FORM CUES: Include detailed form cues and safety notes
+8. PROGRESSION: Consider user's experience level and provide clear progression guidelines
+9. BALANCE: Ensure balanced push/pull movements throughout the week
+10. MOBILITY: Include mobility and flexibility work where appropriate
+11. RECOVERY: Consider rest days and recovery between sessions
+12. PERSONALIZATION: Make exercises specific to user's goals and equipment
+
+EXERCISE NAMING CONVENTIONS:
+- Be specific: "Barbell Squat" not just "Squat"
+- Include variations: "Dumbbell Bench Press", "Incline Barbell Press"
+- Specify equipment: "Cable Row", "Lat Pulldown", "Smith Machine Squat"
+
+WEIGHT RECOMMENDATIONS BY FITNESS LEVEL:
+- Beginner: Start with bodyweight or very light weights
+- Intermediate: Moderate weights based on user's stats
+- Advanced: Heavier weights with proper progression
+
+Return only the JSON object, no additional text or explanations. Ensure all exercise names are specific and professional.`
